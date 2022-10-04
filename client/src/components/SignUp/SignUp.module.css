@@ -1,0 +1,27 @@
+.main{
+    background-color: rgb(229, 229, 236);
+    background-size: 100%;
+    height: 580px;
+    padding-top: 100px;
+}
+.username, .password, .fullName{
+    display: flex;
+    flex-direction: column;
+}
+input{
+    padding: 1em;
+    margin: 0 40%;
+    border-radius: 10px;
+}
+button{
+    margin-top: 2em;
+    padding: 1em;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.sign_up{
+    margin-top: 1em;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
