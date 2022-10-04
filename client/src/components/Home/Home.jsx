@@ -1,8 +1,9 @@
-
+import React from "react";
+import Header from "../Header.jsx/Header";
 const Home = () => {
     return(
         <div>
-            Home
+            <Header />
         </div>
     )
 }
