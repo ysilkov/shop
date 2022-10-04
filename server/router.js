@@ -1,8 +1,8 @@
 import Router from "express"
-import PostControler from "./PostControler.js";
+import PostController from "./PostController.js";
 
 const router = new Router();
 
-router.post('/auth', PostControler.create)
+router.post('/auth', PostController.create)
 
 export default router

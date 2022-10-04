@@ -1,6 +1,6 @@
 import Auth from "./components/auth.js"
 
-class PostControler{
+class PostController{
     async create(req, res){
         try{
             const {user, password} = req.body;
@@ -12,4 +12,4 @@ class PostControler{
     }
 }
 
-export default new PostControler();
+export default new PostController();
