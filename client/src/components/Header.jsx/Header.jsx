@@ -15,6 +15,8 @@ const Header =()=>{
             <div className={style.button_down}>
                 <div className={style.button_settings}>Settings</div>
                 <div className={style.button_settings_content}>
+                <Link to={"/sign-in"} className={style.home}>SignIn</Link>
+                <Link to={"/sign-up"} className={style.home}>SignUp</Link>
                    <a href="#">Log Out</a>
                 </div>
             </div>

@@ -1,0 +1,20 @@
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+.buttonContainerBlockSignUp, .buttonContainerBlockSignIn{
+    background-color: rgb(42, 42, 48);
+    border: 1em solid rgb(42, 42, 48);
+    border-radius: 10px;
+}
+.SignIn, .SignUp{
+    color: white;
+    text-decoration: none;
+}
+.buttonContainerBlockSignIn{
+    margin-left: 1em;
+}
+h1{
+    margin-top: 5em;
+}

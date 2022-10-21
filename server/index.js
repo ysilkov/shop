@@ -1,9 +1,11 @@
 import express from "express";
-import mongoose from "mongoose"
-import router from "./router.js"
+import mongoose from "mongoose";
+import router from "./router.js";
+import cors from 'cors';
 
 const PORT = 4000;
 const app = express();
+app.use(cors())
 app.use(express.json())
 const DBL_URL = `mongodb+srv://user:user@cluster0.ju1rfue.mongodb.net/?retryWrites=true&w=majority`
 

@@ -25,3 +25,7 @@ button{
     text-decoration: underline;
     cursor: pointer;
 }
+.errorMessage{
+    color:red;
+    margin-bottom: 1em;
+}
