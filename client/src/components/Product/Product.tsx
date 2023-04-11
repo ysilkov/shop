@@ -1,26 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import style from "./Product.module.css";
 import { ReactComponent as Star } from "../../image/star.svg";
 import Header from "../Header/Header";
-import { Link, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks/hook";
-import { findProduct } from "../../store/products";
+import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import { useAppSelector } from "../../hooks/hook";
 
 const Product = React.memo(() => {
-  let { productId } = useParams();
-  const id = productId!.substring(1);
-  const dispatch = useAppDispatch();
   const product = useAppSelector((state) => state.products.product);
-  const { email } = useAppSelector((state) => state.auth);
-  useEffect(() => {
-    dispatch(findProduct(id));
-  }, [dispatch, id]);
+  const { email, token } = useAppSelector((state) => state.auth);
   return (
     <div>
-      <Header email={email} />
+      <Header email={email} token={token}/>
       <>
         {product.map((el) => (
           <div className={style.product_block} key={el.id}>

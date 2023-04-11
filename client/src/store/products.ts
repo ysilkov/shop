@@ -1,30 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
 import { getErrorMessage, ProductsType } from "../helper";
 
-let productCookie;
-if (Cookies.get("product") === undefined) {
-  productCookie = [];
-} else {
-  const { product } = JSON.parse(Cookies.get("product") as string);
-  productCookie = product;
-}
-let productsCookie;
-if (Cookies.get("products") === undefined) {
-  productsCookie = [];
-} else {
-  const { products } = JSON.parse(Cookies.get("products") as string);
-  productsCookie = products;
-}
 const initialState = {
-  products: productsCookie as Array<ProductsType>,
+  products: localStorage.getItem("products") === undefined || localStorage.getItem("products") === null ? [] : JSON.parse(localStorage.getItem("products") as string).products  as Array<ProductsType>,
   allProducts: [] as Array<ProductsType>,
-  product: productCookie as Array<ProductsType>,
+  product: localStorage.getItem("product") === undefined || localStorage.getItem("product") === null  ? [] : JSON.parse(localStorage.getItem("product") as string).product as Array<ProductsType>,
   message: null,
 };
-type GetProducts = {
+interface GetProducts {
   page: number;
 };
+interface GetCategoryProducts {
+  page: number;
+  category: string
+};
+interface GetTitleProducts {
+  brand: string;
+  page: number;
+};
+interface GetBrandCategoryProducts{
+  brand: string;
+  page: number;
+  category: string
+}
 export const getProducts = createAsyncThunk(
   "products/getProducts",
   async (data: GetProducts, { rejectWithValue, dispatch }) => {
@@ -51,41 +49,70 @@ export const getAllProducts = createAsyncThunk(
     }
   }
 );
-type GetCategoryProducts= {
-  page: number;
-  category: string
-};
 export const getCategoryProducts = createAsyncThunk(
   "categoryProducts/getCategoryProducts",
   async(data: GetCategoryProducts, { rejectWithValue, dispatch }) => {
-    console.log(data)
     try {
-      const response = await fetch(`http://localhost:4000/api/sortProducts?limit=${data.page}`, {
+      const response = await fetch(`http://localhost:4000/api/sortProductsCategory?limit=${data.page}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({category: data.category}),
       });
       const dataRes = await response.json();
-      console.log(dataRes)
       return dataRes;
     } catch (error) {
       return rejectWithValue({ message: getErrorMessage(error) });
     }
-  })
-
+  });
+  export const getBrandProducts = createAsyncThunk(
+    "products/getBrandProducts",
+    async (data: GetTitleProducts, { rejectWithValue, dispatch }) => {
+      try {
+        const response = await fetch(`http://localhost:4000/api/sortProductsBrand?limit=${data.page}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({brand: data.brand}),
+        });
+        const dataRes = await response.json();
+        return dataRes;
+      } catch (error) {
+        return rejectWithValue({ message: getErrorMessage(error) });
+      }
+    }
+  );
+  export const getBrandCategoryProducts = createAsyncThunk(
+    "products/getBrandCategoryProducts",
+    async (data: GetBrandCategoryProducts, { rejectWithValue, dispatch }) => {
+      try {
+        const response = await fetch(`http://localhost:4000/api/sortBrandCategoryProducts?limit=${data.page}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({brand: data.brand, category: data.category}),
+        });
+        const dataRes = await response.json();
+        return dataRes;
+      } catch (error) {
+        return rejectWithValue({ message: getErrorMessage(error) });
+      }
+    }
+  );
 export const Products = createSlice({
   name: "products",
   initialState,
   reducers: {
     findProduct: (state, action) => {
       state.product = state.products.filter((el) => el.id === action.payload);
-      Cookies.set(
+      localStorage.setItem(
         "product",
         JSON.stringify({
           product: state.products.filter((el) => el.id === action.payload),
         })
       );
     },
+    clearProducts: (state) =>{
+      state.products = []
+      localStorage.removeItem("products");
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -106,8 +133,24 @@ export const Products = createSlice({
           "products",
           JSON.stringify({ products: action.payload })
         );
-      });
+      })
+      .addCase(getBrandProducts.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.allProducts = action.payload;
+        localStorage.setItem(
+          "products",
+          JSON.stringify({ products: action.payload })
+        );
+      })   
+      .addCase(getBrandCategoryProducts.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.allProducts = action.payload;
+        localStorage.setItem(
+          "products",
+          JSON.stringify({ products: action.payload })
+        );
+      })   
   },
 });
-export const { findProduct } = Products.actions;
+export const { findProduct, clearProducts } = Products.actions;
 export default Products.reducer;

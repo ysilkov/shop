@@ -29,13 +29,38 @@ class PostController {
       return res.status(400).json(e.message);
     }
   }
-  async sortProducts(req, res) {
+  async sortProductsCategory(req, res) {
     try {
-      const {category} = req.body;
-      const products = await Products.find({category: category}).limit(req.query.limit);
+      const { category } = req.body;
+      const products = await Products.find({ category: category }).limit(
+        req.query.limit
+      );
       return res.json(products);
     } catch (e) {
-      return res.status(400).json({ message: `Продукти відсутні`  });
+      return res.status(400).json({ message: `Продукти відсутні` });
+    }
+  }
+  async sortProductsBrand(req, res) {
+    try {
+      const { brand } = req.body;
+      const products = await Products.find({ brand: brand }).limit(
+        req.query.limit
+      );
+      return res.json(products);
+    } catch (e) {
+      return res.status(400).json({ message: `Продукти відсутні` });
+    }
+  }
+  async sortBrandCategoryProducts(req, res) {
+    try {
+      const { brand, category } = req.body;
+      const products = await Products.find({ brand: brand })
+        .sort({ category: 1 })
+        .find({ category: category })
+        .limit(req.query.limit);
+      return res.json(products);
+    } catch (e) {
+      return res.status(400).json({ message: `Продукти відсутні` });
     }
   }
 }

@@ -5,11 +5,12 @@ import home from "../../image/home.png";
 import basket from "../../image/basket.png";
 import setting from "../../image/setting.png"
 import { removeUser } from "../../store/auth";
-import { useAppDispatch, useAppSelector } from "../../hooks/hook";
+import { useAppDispatch } from "../../hooks/hook";
 import Cookies from "js-cookie";
 
 interface HeaderProps{
-email: string | null
+email: string | null,
+token : string | null,
 }
 const Header =(props: HeaderProps)=>{
     const dispatch = useAppDispatch();
@@ -17,7 +18,6 @@ const Header =(props: HeaderProps)=>{
         dispatch(removeUser());
         Cookies.remove("user");
     }
-    const { token} = useAppSelector((state) => state.auth);
     return(
         <div className={style.header}>
             <div className={style.header_home}>
@@ -33,7 +33,7 @@ const Header =(props: HeaderProps)=>{
             <div className={style.header_logo_basket}>
                 <img src={basket} alt="Basket" className={style.header_logo_basket} />
             </div>
-            {token === null ? 
+            {props.token === null ? 
             <div className={style.button_menu_down}>
                 <img className={style.button_menu} src={setting} alt="Setting" />
                 <div className={style.button_menu_content}>

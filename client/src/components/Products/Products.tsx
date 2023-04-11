@@ -1,8 +1,9 @@
 import React from "react";
 import style from "./Products.module.css";
 import { ReactComponent as Star } from "../../image/star.svg";
-import { useAppSelector } from "../../hooks/hook";
+import { useAppDispatch, useAppSelector } from "../../hooks/hook";
 import { Link } from "react-router-dom";
+import { findProduct } from "../../store/products";
 
 interface ProductsProps {
   firstContentIndex: number;
@@ -10,7 +11,12 @@ interface ProductsProps {
 }
 
 const Products = React.memo((props: ProductsProps) => {
-  const products = useAppSelector((state) => state.products.products);
+  const products = useAppSelector((state) => state.products.products)
+  const dispatch = useAppDispatch();
+  const getProduct = (id: string) =>{
+    dispatch(findProduct(id))
+  }
+  console.log(products)
   return (
     <div className={style.products_block}>
       {products
@@ -34,7 +40,7 @@ const Products = React.memo((props: ProductsProps) => {
                 </p>
               </section>
               <section className={style.product_button}>
-                <Link to={`/product/:${product.id}`}>Show More</Link>
+                <Link to={`/product/:${product.id}`}  onClick = {()=>getProduct(product.id)}>Show More</Link>
                 <Link to={`/product/:${product.id}`}>Buy Now</Link>
               </section>
             </div>
