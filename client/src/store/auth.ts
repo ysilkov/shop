@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getErrorMessage } from "../helper";
+import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
+import { getAuth, getLogin } from "./api";
 
 let user 
 if(Cookies.get("user")===undefined){
@@ -22,48 +22,6 @@ const initialState: InitialState = {
   message: null,
   token: token || null,
 };
-type DataGetAuth = {
-  fullName: string, 
-  email: string,
-  password: string
-}
-type DataGetLogin = {
-  email: string, 
-  password: string
-}
-export const getAuth = createAsyncThunk(
-  "auth/getAuth",
-  async (data: DataGetAuth, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await fetch("http://localhost:4000/api/auth/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const dataRes = await response.json();
-
-      return dataRes;
-    } catch (error) {
-      return rejectWithValue({message: getErrorMessage(error)});
-    }
-  }
-);
-export const getLogin = createAsyncThunk(
-  "auth/getLogin",
-  async (data: DataGetLogin, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await fetch("http://localhost:4000/api/login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const dataRes = await response.json();
-      return dataRes;
-    } catch (error) {
-      return rejectWithValue({message: getErrorMessage(error)});
-    }
-  }
-);
 
 export const Auth = createSlice({
   name: "auth",

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import style from "./SignUp.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { getAuth, removeUser } from "../../store/auth";
+import { removeUser } from "../../store/auth";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
+import { getAuth } from "../../store/api";
 
 const SignUp = React.memo(() => {
   const [emailDirty, setEmailDirty] = useState(false);

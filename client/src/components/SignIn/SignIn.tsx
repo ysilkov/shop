@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import style from "./SignIn.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { getLogin, removeUser } from "../../store/auth";
+import { removeUser } from "../../store/auth";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
+import { getLogin } from "../../store/api";
 
 const SignIn = () => {
   const [emailDirty, setEmailDirty] = useState(false);

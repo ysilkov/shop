@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getProducts } from "../store/products";
+import { getProducts } from "../store/api";
 import { useAppDispatch } from "./hook";
 interface UsePaginationProps {
    contentPerPage: number,

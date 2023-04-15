@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getErrorMessage, ProductsType } from "../helper";
+import { createSlice } from "@reduxjs/toolkit";
+import {  ProductsType } from "../helper";
+import { getAllProducts, getBrandCategoryProducts, getBrandProducts, getCategoryProducts, getProducts } from "./api";
 
 const initialState = {
   products: localStorage.getItem("products") === undefined || localStorage.getItem("products") === null ? [] : JSON.parse(localStorage.getItem("products") as string).products  as Array<ProductsType>,
@@ -8,95 +9,7 @@ const initialState = {
   message: null,
   order: [] as Array<ProductsType>
 };
-interface GetProducts {
-  page: number;
-};
-interface GetCategoryProducts {
-  page: number;
-  category: string
-};
-interface GetTitleProducts {
-  brand: string;
-  page: number;
-};
-interface GetBrandCategoryProducts{
-  brand: string;
-  page: number;
-  category: string
-}
-export const getProducts = createAsyncThunk(
-  "products/getProducts",
-  async (data: GetProducts, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await fetch(
-        `http://localhost:4000/api/products?limit=${data.page}`
-      );
-      const dataRes = await response.json();
-      return dataRes;
-    } catch (error) {
-      return rejectWithValue({ message: getErrorMessage(error) });
-    }
-  }
-);
-export const getAllProducts = createAsyncThunk(
-  "products/getAllProducts",
-  async (_, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await fetch(`http://localhost:4000/api/allProducts`);
-      const dataRes = await response.json();
-      return dataRes;
-    } catch (error) {
-      return rejectWithValue({ message: getErrorMessage(error) });
-    }
-  }
-);
-export const getCategoryProducts = createAsyncThunk(
-  "categoryProducts/getCategoryProducts",
-  async(data: GetCategoryProducts, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await fetch(`http://localhost:4000/api/sortProductsCategory?limit=${data.page}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({category: data.category}),
-      });
-      const dataRes = await response.json();
-      return dataRes;
-    } catch (error) {
-      return rejectWithValue({ message: getErrorMessage(error) });
-    }
-  });
-  export const getBrandProducts = createAsyncThunk(
-    "products/getBrandProducts",
-    async (data: GetTitleProducts, { rejectWithValue, dispatch }) => {
-      try {
-        const response = await fetch(`http://localhost:4000/api/sortProductsBrand?limit=${data.page}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({brand: data.brand}),
-        });
-        const dataRes = await response.json();
-        return dataRes;
-      } catch (error) {
-        return rejectWithValue({ message: getErrorMessage(error) });
-      }
-    }
-  );
-  export const getBrandCategoryProducts = createAsyncThunk(
-    "products/getBrandCategoryProducts",
-    async (data: GetBrandCategoryProducts, { rejectWithValue, dispatch }) => {
-      try {
-        const response = await fetch(`http://localhost:4000/api/sortBrandCategoryProducts?limit=${data.page}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({brand: data.brand, category: data.category}),
-        });
-        const dataRes = await response.json();
-        return dataRes;
-      } catch (error) {
-        return rejectWithValue({ message: getErrorMessage(error) });
-      }
-    }
-  );
+
 export const Products = createSlice({
   name: "products",
   initialState,
