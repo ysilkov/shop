@@ -9,6 +9,7 @@ import {
   getCategoryProducts,
   getProducts,
 } from "../../store/products";
+import Contacts from "../Contact/Contacts";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import Loading from "../Loading/LoadingPage/Loading";
@@ -35,7 +36,6 @@ const HomePage = () => {
     contentPerPage: 9,
     count: allProducts.length,
   });
-
   useEffect(() => {
     if (selectedBrand === "all" && selectedCategory === "all") {
       dispatch(getProducts({ page: lastContentIndex }));
@@ -152,6 +152,7 @@ const HomePage = () => {
           <Loading />
         )}
       </div>
+      <Contacts />
       <Footer />
     </>
   );

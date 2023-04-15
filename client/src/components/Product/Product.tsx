@@ -7,6 +7,8 @@ import Footer from "../Footer/Footer";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { useAppSelector } from "../../hooks/hook";
+import Contacts from "../Contact/Contacts";
+
 
 const Product = React.memo(() => {
   const product = useAppSelector((state) => state.products.product);
@@ -120,7 +122,10 @@ const Product = React.memo(() => {
           </div>
         ))}
       </>
+      <>
+      <Contacts />
       <Footer />
+      </>
     </div>
   );
 });

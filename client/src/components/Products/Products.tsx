@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./Products.module.css";
 import { ReactComponent as Star } from "../../image/star.svg";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
 import { Link } from "react-router-dom";
-import { findProduct } from "../../store/products";
+import { findProduct} from "../../store/products";
+import ModalAddToCart from "../ModalAddToCart/ModalAddToCart";
 
 interface ProductsProps {
   firstContentIndex: number;
@@ -16,7 +17,11 @@ const Products = React.memo((props: ProductsProps) => {
   const getProduct = (id: string) =>{
     dispatch(findProduct(id))
   }
-  console.log(products)
+  const [modalActive, setModalActive] = useState(false);
+  const addToCart =(id: string)=>{
+    setModalActive(true)
+    dispatch(findProduct(id))
+  }
   return (
     <div className={style.products_block}>
       {products
@@ -41,11 +46,16 @@ const Products = React.memo((props: ProductsProps) => {
               </section>
               <section className={style.product_button}>
                 <Link to={`/product/:${product.id}`}  onClick = {()=>getProduct(product.id)}>Show More</Link>
-                <Link to={`/product/:${product.id}`}>Buy Now</Link>
+                <button onClick={()=>addToCart(product.id)}>Add to cart</button>
               </section>
+             
             </div>
           ))
     }
+   <ModalAddToCart
+          active={modalActive}
+          setActive={setModalActive}
+        />
     </div>
   );
 });

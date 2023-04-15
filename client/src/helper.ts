@@ -15,5 +15,20 @@ brand: string;
 category: string;
 thumbnail: string;
 images: Array<string>
-
  }
+ export interface OrderType{
+  _id: string;
+  id: string;
+  title: string;
+  description: string;
+  price: number,
+  discountPercentage: number;
+  rating: number;
+  stock: number
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: Array<string>;
+  count: number
+   }
+ 

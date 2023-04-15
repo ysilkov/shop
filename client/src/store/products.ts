@@ -6,6 +6,7 @@ const initialState = {
   allProducts: [] as Array<ProductsType>,
   product: localStorage.getItem("product") === undefined || localStorage.getItem("product") === null  ? [] : JSON.parse(localStorage.getItem("product") as string).product as Array<ProductsType>,
   message: null,
+  order: [] as Array<ProductsType>
 };
 interface GetProducts {
   page: number;
@@ -105,14 +106,14 @@ export const Products = createSlice({
       localStorage.setItem(
         "product",
         JSON.stringify({
-          product: state.products.filter((el) => el.id === action.payload),
+          product: state.products.filter((el) => el.id === action.payload)
         })
       );
     },
     clearProducts: (state) =>{
       state.products = []
       localStorage.removeItem("products");
-    }
+    },
   },
   extraReducers: (builder) => {
     builder

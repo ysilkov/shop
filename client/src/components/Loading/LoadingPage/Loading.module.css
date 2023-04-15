@@ -1,5 +1,6 @@
 .loading {
   display: flex;
+  margin: 30px 0px 30px 30px;
 }
 .loading_container {
   border: 1px dashed #aaa;

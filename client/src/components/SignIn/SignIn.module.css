@@ -1,13 +1,11 @@
 .main {
-
   background-color: rgb(229, 229, 236);
   background-size: 100%;
   min-height: 100vh;
-  
+
   text-align: center;
-  
 }
-.main_container{
+.main_container {
   padding-top: 100px;
 }
 .main_container > h1 {

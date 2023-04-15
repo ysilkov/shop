@@ -2,10 +2,10 @@ import style from "./Header.module.css";
 import { Link } from "react-router-dom";
 import logo from "../../image/logo.png";
 import home from "../../image/home.png";
-import basket from "../../image/basket.png";
+import cart from "../../image/basket.png";
 import setting from "../../image/setting.png"
 import { removeUser } from "../../store/auth";
-import { useAppDispatch } from "../../hooks/hook";
+import { useAppDispatch, useAppSelector } from "../../hooks/hook";
 import Cookies from "js-cookie";
 
 interface HeaderProps{
@@ -14,6 +14,7 @@ token : string | null,
 }
 const Header =(props: HeaderProps)=>{
     const dispatch = useAppDispatch();
+    const {order} = useAppSelector((state)=> state.cart)
     const logOut = () =>{
         dispatch(removeUser());
         Cookies.remove("user");
@@ -30,8 +31,10 @@ const Header =(props: HeaderProps)=>{
                 <img src={logo} alt="Logo" className={style.header_logo_logo} />
                 <p className={style.header_username}>{props.email}</p>
             </div> 
-            <div className={style.header_logo_basket}>
-                <img src={basket} alt="Basket" className={style.header_logo_basket} />
+            <div className={style.header_block_cart}>
+                <Link to={"/cart"}>
+                <img src={cart} alt="Cart" className={ style.header_logo_cart } />
+                <p className={order.length >= 1 ?  style.header_logo_cart_items_filled : style.header_logo_cart_items_empty }>{order.length}</p></Link>
             </div>
             {props.token === null ? 
             <div className={style.button_menu_down}>
@@ -45,7 +48,6 @@ const Header =(props: HeaderProps)=>{
              <img className={style.button_menu} src={setting} alt="Setting" />
              <div className={style.button_menu_content}>
              <Link to={"/sign-in"} className={style.home}>Settings</Link>
-             <Link to={"/sign-up"} className={style.home}>Contact</Link>
              <Link to={"/sign-in"} onClick={()=>logOut()}>Log Out</Link>
              </div>
          </div>
