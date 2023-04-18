@@ -7,6 +7,7 @@ import LoadingSignIn from './components/Loading/LoadingSignIn';
 import LoadingSignUp from './components/Loading/LoadingSignUp';
 import Product from './components/Product/Product';
 import Cart from './components/Cart/Cart';
+import ModalOrder from './components/ModalOrder/SuccessOrder';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Route path="/loadingsignin" element={<LoadingSignIn />} />
       <Route path="/loadingsignup" element={<LoadingSignUp />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/success" element={<ModalOrder />}/>
     </Routes>
     </BrowserRouter>
     </div>

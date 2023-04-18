@@ -9,7 +9,6 @@ const LoadingSignUp = () => {
   if (token === undefined || token === null) {
     return <SignUp />;
   }
-
   return (
     <div>
       <HomePage />

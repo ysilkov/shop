@@ -1,52 +1,66 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { OrderType, ProductsType } from "../helper";
+import { getOrder } from "./api";
+
 const initialState = {
-  products:[] as Array<ProductsType>,
-  order: localStorage.getItem("order") === undefined ||
-  localStorage.getItem("order") === null
-    ? []
-    : (JSON.parse(localStorage.getItem("order") as string)
-    ).order  as Array<OrderType>,
+  products: [] as Array<ProductsType>,
+  order: [] as Array<OrderType>,
+  message: null,
 };
 
 export const Cart = createSlice({
   name: "cart",
   initialState,
   reducers: {
-   orderProducts:(state, action) =>{
-    state.products = action.payload
-   },
-   orderProduct: (state, action) => {
-   const productToAdd = state.products.find(
-      (el) => el.id === action.payload.id
-    );
-    if (productToAdd) {
-      const existingProductIndex = state.order.findIndex(
-        (el) => el.id === productToAdd.id
+    orderProducts: (state, action) => {
+      state.products = action.payload;
+    },
+    orderProduct: (state, action) => {
+      const productToAdd = state.products.find(
+        (el) => el.id === action.payload.id
       );
-      if (existingProductIndex >= 0) {
-        state.order[existingProductIndex].count = action.payload.count;
-      } else {
-        state.order.push({ ...productToAdd, count: action.payload.count });
+      if (productToAdd) {
+        const existingProductIndex = state.order.findIndex(
+          (el) => el.id === productToAdd.id
+        );
+        if (existingProductIndex >= 0) {
+          state.order[existingProductIndex].count = action.payload.count;
+        } else {
+          state.order.push({ ...productToAdd, count: action.payload.count });
+        }
       }
-      localStorage.setItem("order", JSON.stringify({ order: state.order }));
-    }
-   },
-   changeCountProduct: (state, action) => {
-      state.order = state.order.map((el)=>{
-         if (el.id === action.payload.id) {
-            return { ...el, count: parseInt(action.payload.count) };
-          } else {
-            return el;
-          }
-         })
-         localStorage.setItem("order", JSON.stringify({ order: state.order }));
-      },
+    },
+    changeCountProduct: (state, action) => {
+      state.order = state.order.map((el) => {
+        if (el.id === action.payload.id) {
+          return { ...el, count: parseInt(action.payload.count) };
+        } else {
+          return el;
+        }
+      });
+    },
     removeOrder: (state, action) => {
       state.order = state.order.filter((el) => el.id !== action.payload);
-      localStorage.setItem("order", JSON.stringify({ order: state.order }));
+    },
+    removeAllOrder: (state) => {
+      state.order = [];
+    },
+    removeMessage: (state) => {
+      state.message = null;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getOrder.fulfilled, (state, action) => {
+      state.message = action.payload.message;
+    });
+  },
 });
-export const { orderProduct, orderProducts, removeOrder, changeCountProduct } = Cart.actions;
+export const {
+  orderProduct,
+  orderProducts,
+  removeOrder,
+  removeAllOrder,
+  changeCountProduct,
+  removeMessage,
+} = Cart.actions;
 export default Cart.reducer;

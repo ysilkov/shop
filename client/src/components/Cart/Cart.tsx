@@ -6,23 +6,31 @@ import Header from "../Header/Header";
 import style from "./Cart.module.css";
 import deleteLogo from "../../image/delete.png";
 import { changeCountProduct, removeOrder } from "../../store/cart";
+import ModalDelivery from "../ModalDelivery/ModalDelivery";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { order } = useAppSelector((state) => state.cart);
   const { email, token } = useAppSelector((state) => state.auth);
+  const [deliveryModal, setDeliveryModal]: [
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>
+  ] = useState(false);
   const [counts, setCounts] = useState(order.map((el) => el.count));
   const dispatch = useAppDispatch();
   const handleCountChange = (index: number, value: number, id: string) => {
     const newCounts = [...counts];
     newCounts[index] = value;
     setCounts(newCounts);
-    dispatch(changeCountProduct({id: id, count: value}))
+    dispatch(changeCountProduct({ id: id, count: value }));
   };
-  console.log(order)
-const deleteProduct = (id: string)=>{
-dispatch(removeOrder(id))
-}
-
+  const navigate = useNavigate();
+  const deleteProduct = (id: string) => {
+    dispatch(removeOrder(id));
+  };
+  const goToOrder = () => {
+    token ? setDeliveryModal(true) : navigate("/sign-in");
+  };
   return (
     <div className={style.cart_block}>
       <Header email={email} token={token} />
@@ -53,30 +61,32 @@ dispatch(removeOrder(id))
                   <td>{el.title}</td>
                   <td>{el.price} $</td>
                   <td>
-                     <section>
-                    <button
-                      onClick={() =>
-                        handleCountChange(
-                          index,
-                          counts[index] <= 1 ? 1 : counts[index] - 1,
-                          el.id
-                        )
-                      }
-                    >
-                      -
-                    </button>
-                    <p>{counts[index]}</p>
-                    <button
-                      onClick={() =>
-                        handleCountChange(index, counts[index] + 1, el.id)
-                      }
-                    >
-                      +
-                    </button>
+                    <section>
+                      <button
+                        onClick={() =>
+                          handleCountChange(
+                            index,
+                            counts[index] <= 1 ? 1 : counts[index] - 1,
+                            el.id
+                          )
+                        }
+                      >
+                        -
+                      </button>
+                      <p>{counts[index]}</p>
+                      <button
+                        onClick={() =>
+                          handleCountChange(index, counts[index] + 1, el.id)
+                        }
+                      >
+                        +
+                      </button>
                     </section>
                   </td>
                   <td>{counts[index] * el.price} $</td>
-                  <td onClick={()=>deleteProduct(el.id)}><img src={deleteLogo} alt="Basket for delete"/></td>
+                  <td onClick={() => deleteProduct(el.id)}>
+                    <img src={deleteLogo} alt="Basket for delete" />
+                  </td>
                 </tr>
               ))}
               <tr>
@@ -84,13 +94,20 @@ dispatch(removeOrder(id))
                 <td>
                   Total:{" "}
                   {order.reduce(
-                    (acc: number, el: { price: number; }, index: number) => acc + counts[index] * el.price,
+                    (acc: number, el: { price: number }, index: number) =>
+                      acc + counts[index] * el.price,
                     0
-                  )} $
+                  )}{" "}
+                  $
                 </td>
               </tr>
             </tbody>
           </table>
+          <button onClick={() => goToOrder()}> Go to order</button>
+          <ModalDelivery
+            deliveryModal={deliveryModal}
+            setDeliveryModal={setDeliveryModal}
+          />
         </div>
       )}
       <div>

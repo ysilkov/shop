@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
 import usePagination from "../../hooks/usePagination";
-import { getAllProducts, getBrandCategoryProducts, getBrandProducts, getCategoryProducts, getProducts } from "../../store/api";
-import {clearProducts} from "../../store/products";
+import {
+  getAllProducts,
+  getBrandCategoryProducts,
+  getBrandProducts,
+  getCategoryProducts,
+  getProducts,
+} from "../../store/api";
+import { clearProducts } from "../../store/products";
 import Contacts from "../Contact/Contacts";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -32,7 +38,7 @@ const HomePage = () => {
   });
   useEffect(() => {
     if (selectedBrand === "all" && selectedCategory === "all") {
-      dispatch(getProducts({ page: lastContentIndex }));
+      dispatch(getProducts({ items: lastContentIndex }));
       dispatch(getAllProducts());
     } else if (selectedBrand !== "all" && selectedCategory === "all") {
       dispatch(clearProducts());

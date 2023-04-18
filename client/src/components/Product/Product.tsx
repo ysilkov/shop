@@ -9,13 +9,12 @@ import { Carousel } from "react-responsive-carousel";
 import { useAppSelector } from "../../hooks/hook";
 import Contacts from "../Contact/Contacts";
 
-
 const Product = React.memo(() => {
   const product = useAppSelector((state) => state.products.product);
   const { email, token } = useAppSelector((state) => state.auth);
   return (
     <div>
-      <Header email={email} token={token}/>
+      <Header email={email} token={token} />
       <>
         {product.map((el) => (
           <div className={style.product_block} key={el.id}>
@@ -116,15 +115,18 @@ const Product = React.memo(() => {
                 <button>Buy Now</button>
               </section>
               <section className={style.product_link}>
-                <Link to={"/"}> <p>&#8592;</p> <p>Go Back</p></Link>
+                <Link to={"/"}>
+                  {" "}
+                  <p>&#8592;</p> <p>Go Back</p>
+                </Link>
               </section>
             </div>
           </div>
         ))}
       </>
       <>
-      <Contacts />
-      <Footer />
+        <Contacts />
+        <Footer />
       </>
     </div>
   );

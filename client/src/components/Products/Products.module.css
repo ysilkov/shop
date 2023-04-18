@@ -24,45 +24,45 @@
   margin-bottom: 10px;
 }
 .product_rating > svg {
-   position: relative;
-   top: 2px;
+  position: relative;
+  top: 2px;
 }
-.product_title{
-   margin: 5px 0;
-   font-weight: bold;
-   font-size: 18px;
-   text-overflow: ellipsis;
+.product_title {
+  margin: 5px 0;
+  font-weight: bold;
+  font-size: 18px;
+  text-overflow: ellipsis;
 }
-.product_description{
-   white-space: nowrap;
-   text-overflow: ellipsis;
-   width: 300px;
-   overflow: hidden;
-   margin: 5px 0 10px 50px;
+.product_description {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 300px;
+  overflow: hidden;
+  margin: 5px 0 10px 50px;
 }
-.product_button{
-   margin: 20px;
+.product_button {
+  margin: 20px;
 }
-.product_button> a:nth-child(1){
-margin-right: 15px;
+.product_button > a:nth-child(1) {
+  margin-right: 15px;
 }
-.product_button> a{
-   padding: 7px 15px 10px 15px;
-   background: black;
-   font-weight: bold;
-   color: white;
-   font-size: 16px;
-   cursor: pointer;
-   border-radius: 5px;
-   text-decoration: none;
+.product_button > a {
+  padding: 7px 15px 10px 15px;
+  background: black;
+  font-weight: bold;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
 }
-.product_button> button{
-   padding: 7px 15px 8px 15px;
-   background: black;
-   font-weight: bold;
-   color: white;
-   font-size: 16px;
-   cursor: pointer;
-   border-radius: 5px;
-   border: 2px solid black;
+.product_button > button {
+  padding: 7px 15px 8px 15px;
+  background: black;
+  font-weight: bold;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid black;
 }

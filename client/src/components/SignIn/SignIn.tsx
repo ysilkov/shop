@@ -126,6 +126,9 @@ const SignIn = () => {
           <Link to={"/sign-up"} onClick={() => changeMessage()}>
             Sign Up
           </Link>
+          <Link to={"/"} onClick={() => changeMessage()}>
+            Go to website
+          </Link>
         </div>
       </div>
     </div>

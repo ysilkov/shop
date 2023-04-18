@@ -1,4 +1,6 @@
 import Auth from "./components/auth.js";
+import Order from "./components/order.js";
+
 import Products from "./components/productsMongoDB.js";
 
 class PostController {
@@ -25,6 +27,25 @@ class PostController {
         fullName,
       } = await Auth.loginUser(email, password);
       return res.json({ token, email: userEmail, fullName });
+    } catch (e) {
+      return res.status(400).json(e.message);
+    }
+  }
+  async order(req, res) {
+    try {
+      const { email, fullName, phone, delivery, address, order } = req.body;
+      const orderProducts = await Order.createOrder(
+        email,
+        fullName,
+        phone,
+        delivery,
+        address,
+        order
+      );
+      return res.json({
+        message: `You have placed an order for items. You order number ${orderProducts._id}.`,
+        orderProducts,
+      });
     } catch (e) {
       return res.status(400).json(e.message);
     }

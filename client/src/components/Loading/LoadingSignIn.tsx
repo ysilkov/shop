@@ -8,7 +8,7 @@ const LoadingSignIn = () => {
   const { token } = useSelector((state: RootState) => state.auth);
   if (token === undefined || token === null) {
     return <SignIn />;
-  } 
+  }
   return (
     <div>
       <HomePage />

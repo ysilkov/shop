@@ -30,13 +30,13 @@ const usePagination: UsePagination = ({ contentPerPage, count }) => {
         if (state === pageCount) {
           return state;
         }
-        dispatch(getProducts({ page: (state + 1) * 9 })); 
+        dispatch(getProducts({ items: (state + 1) * 9 })); 
         return state + 1;
       } else {
         if (state === 1) {
           return state;
         }
-        dispatch(getProducts({ page: (state -1) * 9})); 
+        dispatch(getProducts({ items: (state -1) * 9})); 
 
         return state - 1;
       }
