@@ -1,26 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
-import { getAuth, getLogin } from "./api";
-
-let user;
-if (Cookies.get("user") === undefined) {
-  user = { fullName: null, email: null, token: null };
-} else {
-  user = JSON.parse(Cookies.get("user") as string);
-}
-const { fullName, email, token } = user;
+import { getAuth, getLogin, getSettingsDelivery, getSettingsProfile } from "./api";
 
 type InitialState = {
+  id: string | null;
   fullName: string | null;
   email: string | null;
   message: string | null;
   token: string | null;
+  phone:string |  null;
+  address: string | null;
 };
 const initialState: InitialState = {
-  fullName: fullName || null,
-  email: email || null,
+  id: null,
+  fullName: null,
+  email:  null,
+  phone:  null,
+  address:  null,
   message: null,
-  token: token || null,
+  token:  null,
 };
 
 export const Auth = createSlice({
@@ -28,48 +25,53 @@ export const Auth = createSlice({
   initialState,
   reducers: {
     removeUser(state) {
+      state.id = null;
       state.email = null;
       state.token = null;
       state.fullName = null;
       state.message = null;
+      state.phone = null;
+      state.address = null;
     },
     userUpdate(state, action) {
       state.email = action.payload.email;
       state.fullName = action.payload.fullName;
       state.message = action.payload.message;
     },
+    removeMessageAuth(state){
+      state.message = null;
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAuth.fulfilled, (state, action) => {
+        state.id = action.payload.id;
         state.message = action.payload.message;
         state.email = action.payload.email;
         state.fullName = action.payload.fullName;
         state.token = action.payload.token;
-        Cookies.set(
-          "user",
-          JSON.stringify({
-            email: action.payload.email,
-            token: action.payload.token,
-            fullName: action.payload.fullName,
-          })
-        );
       })
       .addCase(getLogin.fulfilled, (state, action) => {
+        state.id = action.payload.id;
         state.message = action.payload.message;
         state.email = action.payload.email;
         state.fullName = action.payload.fullName;
         state.token = action.payload.token;
-        Cookies.set(
-          "user",
-          JSON.stringify({
-            email: action.payload.email,
-            token: action.payload.token,
-            fullName: action.payload.fullName,
-          })
-        );
+        state.phone = action.payload.phone !== undefined ? action.payload.phone : null ;
+        state.address = action.payload.address !== undefined ? action.payload.address : null;
+      })
+      .addCase(getSettingsProfile.fulfilled, (state, action) => {
+        console.log(action.payload.message)
+        state.message = action.payload.message;
+        state.email = action.payload.email;
+        state.fullName = action.payload.fullName;
+      })
+      .addCase(getSettingsDelivery.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+        state.phone = action.payload.phone;
+        state.address = action.payload.address;
       });
   },
 });
-export const { removeUser, userUpdate } = Auth.actions;
+export const { removeUser, userUpdate, removeMessageAuth } = Auth.actions;
 export default Auth.reducer;

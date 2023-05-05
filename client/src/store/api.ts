@@ -27,12 +27,28 @@ interface GetBrandCategoryProducts {
   category: string;
 }
 interface GetOrder {
+  id: string,
   fullName: string;
   email: string;
   phone: string;
   address: string;
   delivery: string;
   order: Array<OrderType>;
+  timeCreate: string;
+}
+interface DataGetSettingsProfile{
+  fullName: string;
+  email: string;
+  password: string;
+  id: string
+}
+interface DataGetSettingsDelivery{
+  phone: string;
+  address: string;
+  id: string
+}
+interface GetAllOrders{
+  id: string
 }
 export const getAuth = createAsyncThunk(
   "auth/getAuth",
@@ -160,7 +176,54 @@ export const getOrder = createAsyncThunk(
         body: JSON.stringify(data),
       });
       const dataRes = await response.json();
+      return dataRes;
+    } catch (error) {
+      return rejectWithValue({ message: getErrorMessage(error) });
+    }
+  }
+);
+export const getSettingsProfile = createAsyncThunk(
+  "auth/getSettingsProfile",
+  async (data: DataGetSettingsProfile, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch("http://localhost:4000/api/settingsProfile/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const dataRes = await response.json();
 
+      return dataRes;
+    } catch (error) {
+      return rejectWithValue({ message: getErrorMessage(error) });
+    }
+  }
+);
+
+export const getSettingsDelivery = createAsyncThunk(
+  "auth/getSettingsDelivery",
+  async (data: DataGetSettingsDelivery, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch("http://localhost:4000/api/settingsDelivery/", {
+        method: "POST",
+        headers: { 
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache" },
+        body: JSON.stringify(data),
+      });
+      const dataRes = await response.json();
+      return dataRes;
+    } catch (error) {
+      return rejectWithValue({ message: getErrorMessage(error) });
+    }
+  }
+);
+export const getAllOrders = createAsyncThunk(
+  "cart/getAllOrders",
+  async (data: GetAllOrders, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/allOrders?id=${data.id}`);
+      const dataRes = await response.json();
       return dataRes;
     } catch (error) {
       return rejectWithValue({ message: getErrorMessage(error) });

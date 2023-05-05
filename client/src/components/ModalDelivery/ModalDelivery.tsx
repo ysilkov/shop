@@ -11,11 +11,11 @@ interface ModalOrderWindowProps {
 }
 const ModalDelivery = (props: ModalOrderWindowProps) => {
   const { order } = useAppSelector((state) => state.cart);
-  const { email, fullName } = useAppSelector((state) => state.auth) ?? {};
+  const { email, fullName, phone, address, id } = useAppSelector((state) => state.auth) ?? {};
   const [emailInput, setEmailInput] = useState(email ?? "");
   const [fullNameInput, setFullNameInput] = useState(fullName);
-  const [phoneInput, setPhoneInput] = useState("+380");
-  const [addressInput, setAddressInput] = useState("");
+  const [phoneInput, setPhoneInput] = useState(phone != null ? phone : "+380");
+  const [addressInput, setAddressInput] = useState(address !=null ? address : "");
   const [novaPoshta, setNovaPoshta] = useState(false);
   const [ukrPoshta, setUkrPoshta] = useState(false);
   const [deliveryOption, setDeliveryOption] = useState("");
@@ -36,21 +36,22 @@ const ModalDelivery = (props: ModalOrderWindowProps) => {
   };
   const sendOrder = (e: {
     preventDefault: () => void;
-    currentTarget: { elements: { namedItem: (arg0: string) => any } };
   }) => {
     e.preventDefault();
     if (!novaPoshta && !ukrPoshta) {
-      setMessage("Виберіть спосіб доставки");
+      setMessage("Choose delivery");
       setStatusMessage(true);
       return;
     }
     dispatch(
       getOrder({
+        id: id as string,
         fullName: fullNameInput as string,
         email: emailInput as string,
         phone: phoneInput,
         address: addressInput,
         delivery: deliveryOption,
+        timeCreate: new Date().toUTCString(),
         order: order,
       })
     );
@@ -140,7 +141,7 @@ const ModalDelivery = (props: ModalOrderWindowProps) => {
             </div>
           </fieldset>
           <label className={style.submit}>
-            <input type="submit" className={style.button} value="Order" />
+            <input type="submit"  value="Order" />
           </label>
         </form>
         <button

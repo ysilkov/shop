@@ -6,18 +6,15 @@ import cart from "../../image/basket.png";
 import setting from "../../image/setting.png";
 import { removeUser } from "../../store/auth";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
-import Cookies from "js-cookie";
+import { persist } from "../../store/store";
 
-interface HeaderProps {
-  email: string | null;
-  token: string | null;
-}
-const Header = (props: HeaderProps) => {
+const Header = () => {
   const dispatch = useAppDispatch();
   const { order } = useAppSelector((state) => state.cart);
+  const {email, token} = useAppSelector((state)=>state.auth)
   const logOut = () => {
     dispatch(removeUser());
-    Cookies.remove("user");
+    persist.purge();
   };
   return (
     <div className={style.header}>
@@ -29,7 +26,7 @@ const Header = (props: HeaderProps) => {
       <span className={style.header_menu}>
         <div className={style.header_logo_block}>
           <img src={logo} alt="Logo" className={style.header_logo_logo} />
-          <p className={style.header_username}>{props.email}</p>
+          <p className={style.header_username}>{email}</p>
         </div>
         <div className={style.header_block_cart}>
           <Link to={"/cart"}>
@@ -45,7 +42,7 @@ const Header = (props: HeaderProps) => {
             </p>
           </Link>
         </div>
-        {props.token === null ? (
+        {token === null ? (
           <div className={style.button_menu_down}>
             <img className={style.button_menu} src={setting} alt="Setting" />
             <div className={style.button_menu_content}>
@@ -61,10 +58,10 @@ const Header = (props: HeaderProps) => {
           <div className={style.button_menu_down}>
             <img className={style.button_menu} src={setting} alt="Setting" />
             <div className={style.button_menu_content}>
-              <Link to={"/sign-in"} className={style.home}>
+              <Link to={"/settings"} className={style.home}>
                 Settings
               </Link>
-              <Link to={"/sign-in"} className={style.home}>
+              <Link to={"/order"} className={style.home}>
                 Your order
               </Link>
               <Link to={"/sign-in"} onClick={() => logOut()}>

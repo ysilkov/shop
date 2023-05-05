@@ -11,10 +11,9 @@ import Contacts from "../Contact/Contacts";
 
 const Product = React.memo(() => {
   const product = useAppSelector((state) => state.products.product);
-  const { email, token } = useAppSelector((state) => state.auth);
   return (
     <div>
-      <Header email={email} token={token} />
+      <Header />
       <>
         {product.map((el) => (
           <div className={style.product_block} key={el.id}>

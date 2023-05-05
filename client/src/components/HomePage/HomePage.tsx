@@ -22,7 +22,7 @@ const HomePage = () => {
     "all"
   );
   const dispatch = useAppDispatch();
-  const { email, fullName, token } = useAppSelector((state) => state.auth);
+  const { fullName} = useAppSelector((state) => state.auth);
   const { products, allProducts } = useAppSelector((state) => state.products);
   const {
     firstContentIndex,
@@ -76,7 +76,7 @@ const HomePage = () => {
   return (
     <>
       <div className={style.main}>
-        <Header email={email} token={token} />
+        <Header />
         {products.length > 0 ? (
           <>
             <h1>Welcome {fullName}</h1>

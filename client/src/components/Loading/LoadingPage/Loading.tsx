@@ -17,6 +17,21 @@ const Loading = () => {
         <div className={style.loading_line}></div>
         <div className={style.loading_line}></div>
       </div>
+      <div className={style.loading_container}>
+        <div className={style.loading_line}></div>
+        <div className={style.loading_line}></div>
+        <div className={style.loading_line}></div>
+      </div>
+      <div className={style.loading_container}>
+        <div className={style.loading_line}></div>
+        <div className={style.loading_line}></div>
+        <div className={style.loading_line}></div>
+      </div>
+      <div className={style.loading_container}>
+        <div className={style.loading_line}></div>
+        <div className={style.loading_line}></div>
+        <div className={style.loading_line}></div>
+      </div>
     </div>
   );
 };

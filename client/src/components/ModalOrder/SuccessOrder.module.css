@@ -22,12 +22,12 @@
   padding-bottom: 40px;
   font-size: 20px;
 }
-.modal_block > p:nth-child(3) > p {
+.modal_block > div > p {
   padding-bottom: 10px;
   font-size: 20px;
   font-weight: bold;
 }
-.modal_block > p:nth-child(3) {
+.modal_block > div {
   padding-bottom: 40px;
 }
 .modal_block > p:nth-child(4) {

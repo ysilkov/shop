@@ -19,7 +19,7 @@ class Auth {
       const candidate = await AuthMongoDB.findOne({ email });
       if (candidate) {
         throw new ErrorMessage(
-          "Користувач вже зареєстрований з такою електроною поштою"
+          "User didn't registrant"
         );
       }
       const hashPassword = bcrypt.hashSync(password, 7);
@@ -29,7 +29,7 @@ class Auth {
         password: hashPassword,
       });
       const token = generateAccessToken(user._id);
-      return { token: token, email, fullName: user.fullName };
+      return { token: token, email, fullName: user.fullName, id: user._id  };
     } catch (e) {
       throw new ErrorMessage(e);
     }
@@ -39,17 +39,48 @@ class Auth {
     try {
       const user = await AuthMongoDB.findOne({ email });
       if (!user) {
-        throw new ErrorMessage (`Користувач ${email} не знайдено`);
+        throw new ErrorMessage (`User ${email} didn't find`);
       }
       const validPassword = bcrypt.compareSync(password, user.password);
       if (!validPassword) {
-       throw new ErrorMessage("Пароль не вірний");
+       throw new ErrorMessage("The password is not valid");
       }
       const token = generateAccessToken(user._id);
-      return { token: token, email, fullName: user.fullName };
+      return { token: token, email, fullName: user.fullName, id: user._id, phone: user.phone, address: user.address };
     } catch (e) {
       if(!e){
-         throw new ErrorMessage("Виникла помилка");
+         throw new ErrorMessage("An error occurred");
+      }
+      throw new ErrorMessage(e);
+    }
+  }
+  static async updateUser(fullName, email, password, id) {
+    try {
+      const hashPassword = bcrypt.hashSync(password, 7);
+      const updatedUser = await AuthMongoDB.findOneAndUpdate(
+        { _id: id },
+        { fullName, email, password: hashPassword },
+        { new: true }
+      );
+      return { email: updatedUser.email, fullName: updatedUser.fullName, message: "Profile data changed successfully" };
+    } catch (e) {
+      if (!e) {
+        throw new ErrorMessage("An error occurred");
+      }
+      throw new ErrorMessage(e);
+    }
+  }
+  static async addInfoToUser(phone, address, id) {
+    try {
+      const updatedUser = await AuthMongoDB.findOneAndUpdate(
+        { _id: id },
+        { phone, address },
+        { new: true }
+      );
+      return { phone: updatedUser.phone, address: updatedUser.address, message: "Delivery data changed successfully" };
+    } catch (e) {
+      if (!e) {
+        throw new ErrorMessage("An error occurred");
       }
       throw new ErrorMessage(e);
     }

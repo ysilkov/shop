@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { order } = useAppSelector((state) => state.cart);
-  const { email, token } = useAppSelector((state) => state.auth);
+  const { token } = useAppSelector((state) => state.auth);
   const [deliveryModal, setDeliveryModal]: [
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>
@@ -33,7 +33,7 @@ const Cart = () => {
   };
   return (
     <div className={style.cart_block}>
-      <Header email={email} token={token} />
+      <Header />
       {order.length < 1 ? (
         <div>
           <p>Your don't have products for order</p>

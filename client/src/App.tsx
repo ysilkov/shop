@@ -8,6 +8,8 @@ import LoadingSignUp from './components/Loading/LoadingSignUp';
 import Product from './components/Product/Product';
 import Cart from './components/Cart/Cart';
 import ModalOrder from './components/ModalOrder/SuccessOrder';
+import OrderPage from './components/OrderPage/OrderPage';
+import Settings from './components/Settings/Settings';
 
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
       <Route path="/loadingsignup" element={<LoadingSignUp />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/success" element={<ModalOrder />}/>
+      <Route path="/order" element={<OrderPage />} />
+      <Route path="/settings" element={<Settings />} />
     </Routes>
     </BrowserRouter>
     </div>

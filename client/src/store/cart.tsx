@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { OrderType, ProductsType } from "../helper";
-import { getOrder } from "./api";
+import { OrderSuccesfulType, OrderType, ProductsType } from "../helper";
+import { getAllOrders, getOrder } from "./api";
 
 const initialState = {
   products: [] as Array<ProductsType>,
   order: [] as Array<OrderType>,
+  allOrders: [] as Array<OrderSuccesfulType>,
   message: null,
 };
 
@@ -52,6 +53,11 @@ export const Cart = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getOrder.fulfilled, (state, action) => {
       state.message = action.payload.message;
+    })
+    .addCase(getAllOrders.fulfilled, (state, action) =>{
+      console.log(action.payload.message)
+      state.message = action.payload.message;
+      state.allOrders = action.payload.orders === undefined ? [] : action.payload.orders;
     });
   },
 });

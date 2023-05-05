@@ -1,17 +1,19 @@
 import OrderMongoDB from "./orderMongoDB.js";
 
 class Order {
-  static async createOrder(email, fullName, phone, delivery, address, order) {
+  static async createOrder(id, email, fullName, phone, delivery, address, order, timeCreate) {
     try {
-      const orderProducts = await OrderMongoDB.create({
+      const createOrder = await OrderMongoDB.create({
+        id,
         email,
         fullName,
         phone,
         delivery,
         address,
         order,
+        timeCreate
       });
-      return orderProducts;
+      return createOrder;
     } catch (e) {
       throw new ErrorMessage(e);
     }

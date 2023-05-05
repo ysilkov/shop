@@ -19,15 +19,15 @@ const SuccessOrder = () => {
       <div className={style.modal_block}>
         <h3>Your order is successful</h3>
         <p>{message}</p>
-        <p>
+        <div>
           <p>If your have questions, you can ask for information:</p>
           <Contacts />
-        </p>
+        </div>
         <p>Thank you for the order! </p>
         <button className={style.modal_close} onClick={() => goToHome()}>
           Go to homepage
         </button>
-      </div>{" "}
+      </div>
       : <Loading />
     </div>
   );
