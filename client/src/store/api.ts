@@ -54,7 +54,7 @@ export const getAuth = createAsyncThunk(
   "auth/getAuth",
   async (data: DataGetAuth, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch("http://localhost:4000/api/auth/", {
+      const response = await fetch("https://fast-bayou-33512.herokuapp.com/api/auth/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -71,7 +71,7 @@ export const getLogin = createAsyncThunk(
   "auth/getLogin",
   async (data: DataGetLogin, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch("http://localhost:4000/api/login/", {
+      const response = await fetch("https://fast-bayou-33512.herokuapp.com/api/login/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -88,7 +88,7 @@ export const getProducts = createAsyncThunk(
   async (data: GetProducts, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/products?limit=${data.items}`
+        `https://fast-bayou-33512.herokuapp.com/api/products?limit=${data.items}`
       );
       const dataRes = await response.json();
       return dataRes;
@@ -101,7 +101,7 @@ export const getAllProducts = createAsyncThunk(
   "products/getAllProducts",
   async (_, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/allProducts`);
+      const response = await fetch(`https://fast-bayou-33512.herokuapp.com/api/allProducts`);
       const dataRes = await response.json();
       return dataRes;
     } catch (error) {
@@ -114,7 +114,7 @@ export const getCategoryProducts = createAsyncThunk(
   async (data: GetCategoryProducts, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/sortProductsCategory?limit=${data.page}`,
+        `https://fast-bayou-33512.herokuapp.com/api/sortProductsCategory?limit=${data.page}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -133,7 +133,7 @@ export const getBrandProducts = createAsyncThunk(
   async (data: GetTitleProducts, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/sortProductsBrand?limit=${data.page}`,
+        `https://fast-bayou-33512.herokuapp.com/api/sortProductsBrand?limit=${data.page}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -152,7 +152,7 @@ export const getBrandCategoryProducts = createAsyncThunk(
   async (data: GetBrandCategoryProducts, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/sortBrandCategoryProducts?limit=${data.page}`,
+        `https://fast-bayou-33512.herokuapp.com/api/sortBrandCategoryProducts?limit=${data.page}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -170,7 +170,7 @@ export const getOrder = createAsyncThunk(
   "cart/getOrder",
   async (data: GetOrder, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch("http://localhost:4000/api/order/", {
+      const response = await fetch("https://fast-bayou-33512.herokuapp.com/api/order/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -186,7 +186,7 @@ export const getSettingsProfile = createAsyncThunk(
   "auth/getSettingsProfile",
   async (data: DataGetSettingsProfile, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch("http://localhost:4000/api/settingsProfile/", {
+      const response = await fetch("https://fast-bayou-33512.herokuapp.com/api/settingsProfile/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -204,7 +204,7 @@ export const getSettingsDelivery = createAsyncThunk(
   "auth/getSettingsDelivery",
   async (data: DataGetSettingsDelivery, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch("http://localhost:4000/api/settingsDelivery/", {
+      const response = await fetch("https://fast-bayou-33512.herokuapp.com/api/settingsDelivery/", {
         method: "POST",
         headers: { 
         "Content-Type": "application/json",
@@ -222,7 +222,7 @@ export const getAllOrders = createAsyncThunk(
   "cart/getAllOrders",
   async (data: GetAllOrders, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/allOrders?id=${data.id}`);
+      const response = await fetch(`https://fast-bayou-33512.herokuapp.com/api/allOrders?id=${data.id}`);
       const dataRes = await response.json();
       return dataRes;
     } catch (error) {
